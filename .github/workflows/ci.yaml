@@ -9,12 +9,20 @@ jobs:
     # mantion the name of the job
     linting:
         # make sure when the job will run
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }} # this will run the job on the OS mentioned in the matrix
+        # this is the name of the job
+
+        # using this to run the job on multiple OS
+        # this is a matrix strategy, it will run the job on all the OS mentioned in the list
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+
         # steps to run the job
         steps:
             # need to defign the steps and then give them the name as well 
             - name: Checkout code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Set up Python
               uses: actions/setup-python@v4
