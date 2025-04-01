@@ -46,6 +46,8 @@ jobs:
                     flake8 app.py
     
     testing:
+        needs: linting # this job will run after the linting job is completed
+        # make sure when the job will run
         runs-on: ${{ matrix.os }} # this will run the job on the OS mentioned in the matrix
         strategy: # strategy tells us how a job should be executed "setting up limits on concurrency", defining failure behavior, specifying different combinataion
             matrix:
