@@ -44,3 +44,28 @@ jobs:
             - name: run linting
               run: |
                     flake8 app.py
+    
+    testing:
+        runs-on: ${{ matrix.os }} # this will run the job on the OS mentioned in the matrix
+        strategy: # strategy tells us how a job should be executed "setting up limits on concurrency", defining failure behavior, specifying different combinataion
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+                python-version: [3'.12', '3.11', '3.10'] # this will run the job on all the python versions mentioned in the list
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: ${{ matrix.python-versions }} # use the latest version of python
+
+            - name: install dependencies
+              run: |
+                    python -m pip install --upgrade pip
+                    pip install -r requirements.txt    
+
+            - name: run unit tests
+              run: |
+                    pytest test_app.py
