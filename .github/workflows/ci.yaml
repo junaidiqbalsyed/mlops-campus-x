@@ -2,7 +2,13 @@
 name: CI   
 
 # when to triger the workflow
-on: push
+on: 
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
 
 # run a job, ther can be one or multiple jobs and they run paralley / sequentially
 jobs:
@@ -14,7 +20,7 @@ jobs:
 
         # using this to run the job on multiple OS
         # this is a matrix strategy, it will run the job on all the OS mentioned in the list
-        strategy:
+        strategy: # strategy tells us how a job should be executed "setting up limits on concurrency", defining failure behavior, specifying different combinataion
             matrix:
                 os: [ubuntu-latest, windows-latest, macos-latest]
                 python-version: [3'.12', '3.11', '3.10'] # this will run the job on all the python versions mentioned in the list
