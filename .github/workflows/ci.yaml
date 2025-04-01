@@ -1,0 +1,31 @@
+# name of CI workflow
+name: CI   
+
+# when to triger the workflow
+on: push
+
+# run a job, ther can be one or multiple jobs and they run paralley / sequentially
+jobs:
+    # mantion the name of the job
+    linting:
+        # make sure when the job will run
+        runs-on: ubuntu-latest
+        # steps to run the job
+        steps:
+            # need to defign the steps and then give them the name as well 
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.12' # use the latest version of python
+
+            - name: install dependencies
+              run: |
+                    python -m pip install --upgrade pip
+                    pip install -r requirements.txt    
+
+            - name: run linting
+              run: |
+                    flake8 .\app.py
